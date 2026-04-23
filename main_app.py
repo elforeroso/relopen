@@ -1,9 +1,11 @@
 import os
 import io
+import sys
 import threading
 import contextlib
 import tkinter as tk
 from tkinter import ttk, scrolledtext
+from PIL import Image, ImageTk
 
 
 # from config import RUTA_PROYECTO
@@ -61,14 +63,41 @@ class AppRelopen(tk.Tk):
     # ── UI ────────────────────────────────────────────────────────────────
 
     def _construir_ui(self):
-        # Encabezado
+
+        if getattr(sys, 'frozen', False):
+            base_path = os.path.dirname(sys.executable)
+        else:
+            base_path = os.path.dirname(os.path.abspath(__file__))
+        base_path = base_path + "\img"
+        ruta_logo = os.path.join(base_path, "ESCUDO-BLANCO-H.PNG")
+        print(ruta_logo)
+        
         enc = tk.Frame(self, bg=C_ENCABEZADO, pady=10)
         enc.pack(fill=tk.X)
-        tk.Label(enc, text="RELOPEN v2", font=("Arial", 22, "bold"),
-                 fg=C_TEXTO_ENC, bg=C_ENCABEZADO).pack()
-        tk.Label(enc, text="Modelo de Regresión Logística — Pronóstico de la Vejez",
-                 font=("Arial", 11), fg="#bbdefb", bg=C_ENCABEZADO).pack()
+        
+        contenedor_header = tk.Frame(enc, bg=C_ENCABEZADO)
+        # contenedor_header.pack(expand=True)
+        contenedor_header.pack(fill=tk.X, padx=20)
+        textos_frame = tk.Frame(contenedor_header, bg=C_ENCABEZADO)
+        textos_frame.pack(side=tk.LEFT, padx=15)
 
+        tk.Label(textos_frame, text="RELOPEN v2", font=("Arial", 22, "bold"),
+                 fg=C_TEXTO_ENC, bg=C_ENCABEZADO, anchor="w").pack(fill=tk.X)
+                 
+        tk.Label(textos_frame, text="Modelo de Regresión Logística",
+                 font=("Arial", 11), fg="#bbdefb", bg=C_ENCABEZADO, anchor="w").pack(fill=tk.X)
+
+
+        try:
+            img_original = Image.open(ruta_logo)
+            img_redimensionada = img_original.resize((120, 60), Image.Resampling.LANCZOS)
+            self.logo_img = ImageTk.PhotoImage(img_redimensionada)
+            
+            lbl_logo = tk.Label(contenedor_header, image=self.logo_img, bg=C_ENCABEZADO)
+            lbl_logo.pack(side=tk.RIGHT, padx=15)
+        except Exception as e:
+            print(f"No se pudo cargar el logo: {e}")
+        
         # Cuerpo: panel izquierdo + panel derecho
         cuerpo = tk.Frame(self, bg=C_FONDO)
         cuerpo.pack(fill=tk.BOTH, expand=True, padx=10, pady=8)
@@ -91,7 +120,7 @@ class AppRelopen(tk.Tk):
                  bg=C_PANEL_IZQ, fg=C_ENCABEZADO).pack(pady=(0, 8))
 
         self._seccion(panel, "DATOS")
-        self._btn(panel, "1 · Cargar y Preprocesar Datos",  self.opcion_1, C_VERDE)
+        self._btn(panel, "1 · Cargar y Limpiar Datos",  self.opcion_1, C_VERDE)
 
         self._seccion(panel, "ANÁLISIS")
         self._btn(panel, "2 · Neuropatía Diabética",        self.opcion_2, C_AZUL)
@@ -105,6 +134,11 @@ class AppRelopen(tk.Tk):
 
         ttk.Separator(panel).pack(fill=tk.X, pady=10)
         tk.Button(panel, text="Limpiar consola y gráficas",
+                  command=self._limpiar_todo,
+                  bg="#546e7a", fg="white", font=("Arial", 9),
+                  relief=tk.FLAT, cursor="hand2", pady=5).pack(fill=tk.X)
+
+        tk.Button(panel, text="Acerca de Relopen",
                   command=self._limpiar_todo,
                   bg="#546e7a", fg="white", font=("Arial", 9),
                   relief=tk.FLAT, cursor="hand2", pady=5).pack(fill=tk.X)
