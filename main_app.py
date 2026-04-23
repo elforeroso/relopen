@@ -122,7 +122,7 @@ class AppRelopen(tk.Tk):
         self._seccion(panel, "DATOS")
         self._btn(panel, "1 · Cargar y Limpiar Datos",  self.opcion_1, C_VERDE)
 
-        self._seccion(panel, "ANÁLISIS")
+        self._seccion(panel, "ANÁLISIS ESTADISTICO")
         self._btn(panel, "2 · Neuropatía Diabética",        self.opcion_2, C_AZUL)
         self._btn(panel, "3 · Estrés",                      self.opcion_3, C_AZUL)
         self._btn(panel, "4 · Dinámica Familiar",           self.opcion_4, C_AZUL)
@@ -133,15 +133,59 @@ class AppRelopen(tk.Tk):
         self._btn(panel, "7 · Dinámica Familiar",           self.opcion_7, C_NARANJA)
 
         ttk.Separator(panel).pack(fill=tk.X, pady=10)
+        # tk.Button(panel, text="Limpiar consola y gráficas",
+        #           command=self._limpiar_todo,
+        #           bg="#546e7a", fg="white", font=("Arial", 9),
+        #           relief=tk.FLAT, cursor="hand2", pady=5).pack(fill=tk.X)
+        
         tk.Button(panel, text="Limpiar consola y gráficas",
                   command=self._limpiar_todo,
                   bg="#546e7a", fg="white", font=("Arial", 9),
-                  relief=tk.FLAT, cursor="hand2", pady=5).pack(fill=tk.X)
+                  relief=tk.FLAT, cursor="hand2", pady=5).pack(fill=tk.X, pady=(0, 10))
 
+        # tk.Button(panel, text="Acerca de Relopen",
+        #           command=self._limpiar_todo,
+        #           bg="#546e7a", fg="white", font=("Arial", 9),
+        #           relief=tk.FLAT, cursor="hand2", pady=5).pack(fill=tk.X)
+        
         tk.Button(panel, text="Acerca de Relopen",
-                  command=self._limpiar_todo,
+                  command=self._acerca_de,  # <-- Aquí conectamos la función
                   bg="#546e7a", fg="white", font=("Arial", 9),
-                  relief=tk.FLAT, cursor="hand2", pady=5).pack(fill=tk.X)
+                  relief=tk.FLAT, cursor="hand2", pady=5).pack(fill=tk.X, pady=5)
+        
+    def _acerca_de(self):
+        # Crear la ventana secundaria
+        ventana_info = tk.Toplevel(self)
+        ventana_info.title("Acerca de RELOPEN")
+        ventana_info.geometry("450x300")
+        ventana_info.resizable(False, False)
+        ventana_info.configure(bg="#f5f5f5") # Color de fondo suave
+
+        # Hacer que la ventana sea modal (bloquea la principal hasta cerrar esta)
+        ventana_info.transient(self)
+        ventana_info.grab_set()
+
+        # Contenedor para el texto
+        content = tk.Frame(ventana_info, bg="#f5f5f5", padx=30, pady=20)
+        content.pack(expand=True, fill=tk.BOTH)
+
+        # El texto que solicitaste
+        texto_informativo = (
+            "RELOPEN v2\n\n"
+            "Modelo de Regresión Logística para el\n"
+            "Pronóstico de la Vejez.\n\n"
+            "Desarrollado como herramienta de análisis estadístico\n"
+            "y predictivo en salud pública."
+        )
+
+        tk.Label(content, text=texto_informativo, font=("Arial", 11),
+                 bg="#f5f5f5", fg="#333333", justify=tk.CENTER).pack(pady=10)
+
+        # Botón Aceptar
+        tk.Button(content, text="Aceptar", width=15,
+                  command=ventana_info.destroy, # Cierra la ventana
+                  bg=C_ENCABEZADO, fg="white", font=("Arial", 10, "bold"),
+                  relief=tk.FLAT, cursor="hand2", pady=5).pack(pady=20)    
 
     def _seccion(self, p, label):
         f = tk.Frame(p, bg=C_PANEL_IZQ)
