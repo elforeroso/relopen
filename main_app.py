@@ -153,40 +153,69 @@ class AppRelopen(tk.Tk):
                   bg="#546e7a", fg="white", font=("Arial", 9),
                   relief=tk.FLAT, cursor="hand2", pady=5).pack(fill=tk.X, pady=5)
         
+
     def _acerca_de(self):
         # Crear la ventana secundaria
         ventana_info = tk.Toplevel(self)
         ventana_info.title("Acerca de RELOPEN")
-        ventana_info.geometry("450x300")
+        ventana_info.geometry("550x550")
         ventana_info.resizable(False, False)
-        ventana_info.configure(bg="#f5f5f5") # Color de fondo suave
+        
+        # Definición de colores
+        VERDE_CLARO = "#e8f5e9"  # Fondo verde muy claro
+        VERDE_INSTITUCIONAL = "#004d26" # Verde para resaltar títulos
+        
+        ventana_info.configure(bg=VERDE_CLARO)
 
-        # Hacer que la ventana sea modal (bloquea la principal hasta cerrar esta)
+        # Hacer la ventana modal
         ventana_info.transient(self)
         ventana_info.grab_set()
 
-        # Contenedor para el texto
-        content = tk.Frame(ventana_info, bg="#f5f5f5", padx=30, pady=20)
+        # Contenedor principal con margen
+        content = tk.Frame(ventana_info, bg=VERDE_CLARO, padx=40, pady=30)
         content.pack(expand=True, fill=tk.BOTH)
 
-        # El texto que solicitaste
-        texto_informativo = (
-            "RELOPEN v2\n\n"
-            "Modelo de Regresión Logística para el\n"
-            "Pronóstico de la Vejez.\n\n"
-            "Desarrollado como herramienta de análisis estadístico\n"
-            "y predictivo en salud pública."
-        )
+        # Título RELOPEN en negrita
+        tk.Label(content, text="RELOPEN v2", font=("Arial", 16, "bold"),
+                 bg=VERDE_CLARO, fg=VERDE_INSTITUCIONAL).pack(anchor="w", pady=(0, 10))
 
-        tk.Label(content, text=texto_informativo, font=("Arial", 11),
-                 bg="#f5f5f5", fg="#333333", justify=tk.CENTER).pack(pady=10)
+        # Descripción del producto
+        descripcion = (
+            "Es un producto de investigación de la Universidad de Cundinamarca\n"
+            "que busca evaluar el Modelo de Regresión Logística para el\n"
+            "Pronóstico de la Vejez."
+        )
+        tk.Label(content, text=descripcion, font=("Arial", 10),
+                 bg=VERDE_CLARO, justify=tk.LEFT, anchor="w").pack(fill=tk.X, pady=(0, 20))
+
+        # Subtítulo Autores en negrita y alineado a la izquierda
+        tk.Label(content, text="Autores:", font=("Arial", 11, "bold"),
+                 bg=VERDE_CLARO, anchor="w").pack(fill=tk.X, pady=(10, 5))
+
+        # Lista de autores y correos
+        # Datos basados en la información institucional proporcionada
+        autores = [
+            ("Elkin Oswaldo Forero Soto", "eoforero@ucundinamarca.edu.co"),
+            ("Adriana Hernández Bustos", "ahernandezb@ucundinamarca.edu.co"),
+            ("María Victoria Rojas Martínez", "mariavictoriarojas@ucundinamarca.edu.co"),
+            ("Diego Armando López Vargas", "diegoalopez@ucundinamarca.edu.co"),
+            ("Héctor Fabio Cruz Cuellar", "hfabiocruz@ucundinamarca.edu.co")
+        ]
+
+        for nombre, correo in autores:
+            # Nombre del autor
+            tk.Label(content, text=nombre, font=("Arial", 10, "bold"),
+                     bg=VERDE_CLARO, anchor="w").pack(fill=tk.X)
+            # Correo (en estilo normal)
+            tk.Label(content, text=correo, font=("Arial", 9),
+                     bg=VERDE_CLARO, fg="#555555", anchor="w").pack(fill=tk.X, pady=(0, 5))
 
         # Botón Aceptar
-        tk.Button(content, text="Aceptar", width=15,
-                  command=ventana_info.destroy, # Cierra la ventana
-                  bg=C_ENCABEZADO, fg="white", font=("Arial", 10, "bold"),
-                  relief=tk.FLAT, cursor="hand2", pady=5).pack(pady=20)    
-
+        tk.Button(ventana_info, text="Aceptar", width=15,
+                  command=ventana_info.destroy,
+                  bg=VERDE_INSTITUCIONAL, fg="white", font=("Arial", 10, "bold"),
+                  relief=tk.FLAT, cursor="hand2", pady=5).pack(pady=20)
+    
     def _seccion(self, p, label):
         f = tk.Frame(p, bg=C_PANEL_IZQ)
         f.pack(fill=tk.X, pady=(8, 2))

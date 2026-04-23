@@ -3,7 +3,6 @@ import os
 import sys
 import json
 from pathlib import Path
-# from config import RUTA_PROYECTO
 
 def renombrar_columnas(df):
     df_convertida = df.rename(
