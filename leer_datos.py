@@ -57,24 +57,7 @@ def renombrar_columnas(df):
 
 #     return df
 
-# # ── Configuracion Ruta ───────────────────────────────────────────────────────────────
-# def obtener_ruta_config():
-#     """Obtiene la ruta donde reside el ejecutable o el script"""
-#     if getattr(sys, 'frozen', False):
-#         # Si es un .exe creado con PyInstaller
-#         base_path = Path(sys.executable).parent
-#     else:
-#         # Si es un script .py normal
-#         base_path = Path(__file__).parent
-    
-#     archivo_config = base_path / "config.txt"  
 
-#     if archivo_config.exists():
-#         with open(archivo_config, "r") as f:
-#             return f.read().strip() # Lee la ruta y quita espacios/saltos de línea
-#     else:
-#         # Ruta por defecto si el archivo no existe
-#         return r"C:\Python_scripts\relopen"
 def cargar_configuracion():
     
     if getattr(sys, 'frozen', False):

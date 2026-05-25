@@ -1,0 +1,31 @@
+Relopen
+
+neuropatia_diabetica.py
+
+regrelogi_diabetes v2.py
+regrelogi_dinafami.py
+regrelogi_estres.py
+
+como se hace un listado de librerias requeridas
+
+Instalar
+pip install seaborn
+pip install scikit-learn
+
+
+pyinstaller --set-root . --onefile --name RELOPEN_v1 main.py
+pyinstaller --onefile --hidden-import=pandas --hidden-import=sklearn --hidden-import=statsmodels main.py
+pyinstaller --onefile --name RELOPEN_v1 --hidden-import=pandas --hidden-import=scikit-learn --hidden-import=statsmodels --hidden-import=seaborn main.py
+
+pyinstaller --onefile --name RELOPEN_v1 --hidden-import=matplotlib.backends.backend_tkagg --hidden-import=sklearn.utils._cython_blas --hidden-import=sklearn.neighbors.typedefs main.py
+
+pyinstaller --onefile --name RELOPEN_v2 --hidden-import=matplotlib.backends.backend_tkagg --hidden-import=sklearn.utils._cython_blas --hidden-import=sklearn.neighbors.typedefs main_app.py
+
+Para comprimir con Clave
+"C:\Program Files\WinRAR\rar.exe" a -pRelopen==UdeC -m5 -ep1 -ap"relopen" -x"*.zip" "relopen_v2.zip" ".\*"
+
+Clave Zip
+Relopen==UdeC
+
+Thema: Solarized Dark
+Thema: Ligth Modern
